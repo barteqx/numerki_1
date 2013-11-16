@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Zadanie}{1}
+\contentsline {section}{\numberline {2}Aparat matematyczny}{1}
+\contentsline {subsection}{\numberline {2.1}Metoda Newtona}{1}
+\contentsline {subsubsection}{\numberline {2.1.1}Uwagi}{2}
+\contentsline {subsection}{\numberline {2.2}Metoda bisekcji}{2}
+\contentsline {subsection}{\numberline {2.3}\emph {Regula falsi}}{2}
+\contentsline {subsubsection}{\numberline {2.3.1}Wzory}{3}
+\contentsline {subsection}{\numberline {2.4}Metoda \emph {z\IeC {\l }otego podzia\IeC {\l }u}}{3}
+\contentsline {subsubsection}{\numberline {2.4.1}Algorytm}{3}
