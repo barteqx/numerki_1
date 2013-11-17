@@ -8,28 +8,40 @@ fptr get_func(int i) {
   switch (i) {
   case 0:
     return func_1;
+    break;
   case 1:
     return func_1_d;
+    break;
   case 2:
     return func_1_d_2;
+    break;
   case 3:
     return func_2;
+    break;
   case 4:
     return func_2_d;
+    break;
   case 5:
     return func_2_d_2;
+    break;
   case 6:
     return func_3;
+    break;
   case 7:
     return func_3_d;
+    break;
   case 8:
     return func_3_d_2;
+    break;
   case 9:
     return func_4;
+    break;
   case 10:
     return func_4_d;
+    break;
   case 11:
     return func_4_d_2;
+    break;
   }
 }
 
@@ -97,6 +109,7 @@ int main(int argc, char const *argv[])
 
     else if (arguments[0] == "-x") {
       start_x = std::stod(arguments[1]);
+      if (arguments[1][0] == '-') start_x *= -1;
       arguments.erase(arguments.begin(), arguments.begin()+2);
     }
 
