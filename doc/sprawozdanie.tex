@@ -5,8 +5,10 @@
 \usepackage{polski}
 \usepackage{tikz}
 \usepackage{pgf}
-
-
+\usepackage{siunitx,booktabs}
+\sisetup{
+    table-auto-round
+}
 
 \title{Sprawozdanie}
 \author{Bartosz Zasieczny}
@@ -206,7 +208,50 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
       \end{center}
       $$ f^{(3)}(x) = -8 \pi^3 \cdot cos(2 \pi x) $$
       
-      Z wykresów można wywnioskować, że w tym przedziale funkcja $ f \in C^3 $. Na wykresie $ f $ można zauważyć, że w przedziale $[0,1]$ ma ona 2 ekstrema -- jedno minimum, jedno maksimum. Sugeruje to możliwość użycia metody \emph{złotego podziału}. Niestety $f^{(2)}$ i $f^{(3)}$ nie mają takich samych znaków dla każdej wartości argumentu -- użycie metody \emph{regula falsi} będzie zatem bardzo utrudnione. Możemy natomiast użyć metody bisekcji, ew. łącząc ją z metodą Newtona (trzeba jednak uważać, gdyż na końcach przedziału $f^{(2)}(0) = 0$ i $f^{(2)}(1) = 0$ -- nie mozemy użyć $ x = 0 $ i $ x = 1 $ jako punktów startowych tej metody). 
+      Z wykresów można wywnioskować, że w tym przedziale funkcja $ f \in C^3 $. Na wykresie $ f $ można zauważyć, że w przedziale $[0,1]$ ma ona 2 ekstrema -- jedno minimum, jedno maksimum. Sugeruje to możliwość użycia metody \emph{złotego podziału}. Niestety $f^{(2)}$ i $f^{(3)}$ nie mają takich samych znaków dla każdej wartości argumentu z zadanego przedziału -- użycie metody \emph{regula falsi} będzie zatem bardzo utrudnione, zatem ją pominiemy dla tej funkcji. Możemy natomiast użyć metody bisekcji, ew. łącząc ją z metodą Newtona (trzeba jednak uważać, gdyż na końcach przedziału $f^{(2)}(0) = 0$ i $f^{(2)}(1) = 0$ -- nie mozemy użyć $ x = 0 $ i $ x = 1 $ jako punktów startowych tej metody).
+      
+      \subsubsection{Metoda \emph{złotego podziału}}
+      Polecenie: \texttt{./main -m golden\_section -f 0 -s 0 1 -i 50 -error 10e-8} \\
+      \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+          0 & 0.69098300562505254874 & -0.93203242381322759513 \\
+          1 & 0.80901699437494745126 & -0.93203242381322770616 \\
+          2 & 0.73606797749978958301 & -0.99617104086482766157 \\
+          3 & 0.78115294937452672830 & -0.98090406160281717884 \\
+          4 & 0.75328890437410611636 & -0.99978649070871195015 \\
+          5 & 0.73606797749978958301 & -0.99617104086482766157 \\
+          31 & 0.75000003172107387872 & -0.99999999999998012701 \\
+          32 & 0.74999999251167026593 & -0.99999999999999888978 \\
+          33 & 0.75000001674441429955 & -0.99999999999999444888 \\ \bottomrule
+        \end{tabular}
+    \end{center}
+    
+    Metoda \emph{złotego podziału} dla tej funkcji osiąga wymaganą precyzję (badany przedział jest mniejszy niż $10^{-8}$) dopiero po 34 iteracjach. W ten sposób znaleźliśmy przyblizenie tylko lokalnego minimum funkcji $ f(x) = -1\textrm{,}\; x = 0.75 $ i błąd przyblizenia wynosi $ |x_{33} - x| \approx 0.00000001674441429955 $. \\
+    Chcąc przybliżyć minimum nalezy wykonać to samo polecenie dodając paramatr \texttt{-e max}. Lokalne maksimum funkcji znajduje się w $ x = 0.25 $ i $ f(x) = 1 $ - aby otrzymać wynik o takiej samej precyzji należy wykonać dokładnie tyle samo iteracji i błąd przybliżenia jest bardzo zbliżony. Trzeba jednak pamiętać, że dokładność przyblizeń w przypadku tej funkcji zależy nie tylko od precyzji arytmetyki, ale również od dokładności reprezentacji piczby $\pi = 3.14159265358979323846$ (reprezentacja w \texttt{cmath}). \\
+    Dla tej funkcji metoda \emph{złotego podziału} daje wyniki o rządanej precyzji po dość dużej liczbie iteracji. Aby otrzymać precyzję rzędu $10^{-16}$ program musi wykonać 72 iteracje.
+    \subsubsection{Użycie metody \emph{złotego podziału} jako wstęp do metody Newtona}
+    Warto tej metody użyć jako wstęp do metody Newtona. Weźmy 6-tą iterację z powyższej tabeli ($ i = 5 $) i użyjmy jej jako punkt startowy do metody Newtona (polecenie: \texttt{./main -m newton -f 1 -d 2 -x 0.75328890437410611636 -error 10e-8}). Otrzymujemy następujące dane:
+     \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+         0 & 0.75328890437410611636 & 0.12983149947540237323 \\
+         1 & 0.74999953176226419327 & -0.00001848528487583362 \\
+         2 & 0.75000000000000011102 & 0.00000000000000442639 \\ \bottomrule
+      \end{tabular}
+    \end{center}
+  Otrzymujemy w tym wypadku dość szybko (tylko 3 iteracje!) dane bardzo dokładne (błąd: $ |x_2 - x| \approx 0.00000000000000011102 $) przybliżenie, które jest znacznie lepsze od uzyskanego na drodze zasosowania samej metody \emph{złotego podziału}. 
+    
+  \subsubsection{Metoda bisekscji}
+  Uzywając tej metody musimy podzielić przedział na dwa: $ [0, 0.5] $ i $ [0.5, 1]$. Łatwo zauważyć, że metoda bisekcji zakończy się wtedy już po pierwszej iteracji, gdyż już wtedy dokładnie w połówach przedziałów będziemy mieć zera $f^{(1)}$. Aby się o tym przekonać wystarczy wykonać następujące polecenia:
+  \begin{itemize}
+    \item \texttt{./main -m bisection -f 1 -s 0 0.5 } - dla przedziału $[0, 0.5]$,
+    \item \texttt{./main -m bisection -f 1 -s 0.5 1 } - dla przedziału $[0.5, 1]$
+  \end{itemize}
+  Jak widać nie ma sensu łączenie tej metody z metodą Newtona, gdyż daje ona bardzo dokładne wyniki w czasie rpaktycznie stałym dla tej funkcji i tych dnaych wejściowych.
+      
       
   \section{Kompilacja i obsługa programu}
     \subsection{Wymagania}

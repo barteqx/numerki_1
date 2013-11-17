@@ -31,7 +31,7 @@ void golden_section(double (*f)(double), double a, double b, bool min, int itera
         x_R = b - (b - a)*K;
       }
     }
-    std::cout << std::setprecision(precision) << std::showpoint<< std::fixed << (b+a)/2 << '\t' << (*f)((b+a)/2) << std::endl;
+    std::cout << std::setprecision(precision) << std::showpoint<< std::fixed << i << " & " << (b+a)/2 << " & " << (*f)((b+a)/2) << " \\\\" << std::endl;
     if (b - a < E) break;
   }
 }
