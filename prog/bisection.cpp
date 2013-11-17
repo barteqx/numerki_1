@@ -12,8 +12,6 @@ void bisection(double (*f)(double), double a, double b, int iterations, double E
     } else if ((*f)(b)*(*f)(m) < 0){
       a = m;
     }
-
-    
   if (fabs((*f)(m)) < E || (*f)(a)*(*f)(b) >= 0) break;
   }
 }

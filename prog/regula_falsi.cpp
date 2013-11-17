@@ -4,6 +4,7 @@
 
 void regula_falsi(double (*f)(double), double a, double b, int iterations, double E) {
   double x = (a*(*f)(b) - b*(*f)(a))/((*f)(b) - (*f)(a));
+  std::cout << std::setprecision(40) << x << '\t' << (*f)(x) << std::endl;
   double x_next;
   for (int i = 0; i < iterations; i++) {
     if ((*f)(a)*(*f)(x) <= 0) {

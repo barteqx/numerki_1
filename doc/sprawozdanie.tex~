@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{polski}
+\usepackage{pgfplots}
 
 \title{Sprawozdanie}
 \author{Bartosz Zasieczny}
@@ -46,9 +47,9 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
   \begin{itemize}
     \item \( f(x) \) jest ciągła w przedziale \( [a,b] \);
     \item \( f(x) \) w przedziale \( [a,b] \) ma \textbf{dokładnie jeden} pierwiastek;
-    \item \( f(x) \) na końcach przedziału \( [a,b] \) przyjmuje różne znaki wartości (\( f(a) f(b) < 0 \));
-    \item \( \forall_{x \in [a.b]} \exists_{f'(x)} \wedge \exists_{f''(x)}\);
-    \item \( \forall_{x', x''\in [a,b]}\; sgn\: f'(x') = sgn \: f'(x'') \wedge sgn \: f''(x') = sgn \: f''(x'') \).
+    \item \( f(x) \) na końcach przedziału \( [a,b] \) przyjmuje różne znaki wartości \\(\( f(a) f(b) < 0 \));
+    \item \( \forall_{x \in [a.b]} \: \exists_{f'(x)} \wedge \exists_{f''(x)}\);
+    \item \( \forall_{x', x''\in [a,b]}\; sgn\: f'(x') = sgn \: f'(x'') \: \wedge \: sgn \: f''(x') = sgn \: f''(x'') \).
   \end{itemize}
   Aby wyznaczyć przybliżenie pierwiastka nalezy wykonać nastepujące kroki:
   \begin{enumerate}
@@ -60,8 +61,8 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
   \subsubsection{Wzory}
     $$ x_{0}=\frac{af(b)-bf(a)}{f(b)-f(a)} $$
     $$ x_{i+1}= \left \{ \begin{array}{lll} 
-    \frac {x_i f(a) - a f(x_i)} {f(a) - f(x_i)} & gdy & f(a)f(x_i) \le 0 \\
-    \frac {x_i f(b) - b f(x_i)} {f(b) - f(x_i)} & gdy & f(b)f(x_i) < 0 
+    \displaystyle{\frac {x_i f(a) - a f(x_i)} {f(a) - f(x_i)}} & \textrm{gdy} & f(a)f(x_i) \le 0 \\ \\
+    \displaystyle{\frac {x_i f(b) - b f(x_i)} {f(b) - f(x_i)}} & \textrm{gdy} & f(b)f(x_i) < 0 
   \end{array}\right. $$
   dla \( i = 1,2,... \)
   
@@ -70,7 +71,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     \subsubsection{Algorytm}
     Pierwszy krok algorytmu:
     $$ \left\{\begin{array}{l}
-    x_L^{(0)} := b^{(0)} - (b^{(0)}-a^{(0)})k \\
+    x_L^{(0)} := b^{(0)} - (b^{(0)}-a^{(0)})k \\ \\
     x_R^{(0)} := a^{(0)} + (b^{(0)}-a^{(0)})k
     \end{array}\right. $$
     
