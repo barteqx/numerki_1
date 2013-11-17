@@ -54,30 +54,6 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     \item w p. p. sprawdzić który z przedziałów (\( [a, x_0] \) czy \( [x_0, b] \)) spełnia własnosć \( f(a')f(b') < 0 \) i zastosować do niego pierwszy krok algorytmu.
   \end{enumerate}
   
-  \subsection{\emph{Regula falsi}}
-  Metoda \emph{fałszywej prostej} wyznacza przyblizenia pierwiastka \( f(x) \) spełniającej następujące założenia w przedziale \([a, b]\):
-  \begin{itemize}
-    \item \( f(x) \) jest ciągła w przedziale \( [a,b] \);
-    \item \( f(x) \) w przedziale \( [a,b] \) ma \textbf{dokładnie jeden} pierwiastek;
-    \item \( f(x) \) na końcach przedziału \( [a,b] \) przyjmuje różne znaki wartości \\(\( f(a) f(b) < 0 \));
-    \item \( \forall_{x \in [a.b]} \: \exists_{f'(x)} \wedge \exists_{f''(x)}\);
-    \item \( \forall_{x', x''\in [a,b]}\; sgn\: f'(x') = sgn \: f'(x'') \: \wedge \: sgn \: f''(x') = sgn \: f''(x'') \).
-  \end{itemize}
-  Aby wyznaczyć przybliżenie pierwiastka nalezy wykonać nastepujące kroki:
-  \begin{enumerate}
-    \item przez punkty \(A = (a, f(a))\) i \(B = (b, f(b))\) przeprowadzana jest prosta;
-    \item punkt przecięcia \(x_i\) osi \(X\) jest przyblizeniem pierwiastka;
-    \item jeśli precyzja przybliżenia jest zadowalająca to kończymy algorytm;
-    \item w p. p. wybierany jeden z przedziałów (\( [a, x_i] \) czy \( [x_i, b] \)) taki, który spełnia własnosć \( f(a')f(b') < 0 \) i stosujemy do niego pierwszy krok algorytmu.
-  \end{enumerate}
-  \subsubsection{Wzory}
-    $$ x_{0}=\frac{af(b)-bf(a)}{f(b)-f(a)} $$
-    $$ x_{i+1}= \left \{ \begin{array}{lll} 
-    \displaystyle{\frac {x_i f(a) - a f(x_i)} {f(a) - f(x_i)}} & \textrm{gdy} & f(a)f(x_i) \le 0 \\ \\
-    \displaystyle{\frac {x_i f(b) - b f(x_i)} {f(b) - f(x_i)}} & \textrm{gdy} & f(b)f(x_i) < 0 
-  \end{array}\right. $$
-  dla \( i = 1,2,... \)
-  
   \subsection{Metoda \emph{złotego podziału}}
     Ta metoda w odróżnieniu od poprzednich pozwala szukać lokalnego ektremum wprost, bez konieczności odwoływania się do pochodnych danej funkcji i poszukwiania ich zer. Żeby funkcja \( f(x) \) mogła zostać zbadana za pomocą tej metody, musi być ona w przedziale \( [a,b] \), w którym poszukujemy ekstremum, \textbf{\emph{unimodalna}} -- tzn. ciągła i posiadać w tym przedziale dokładnie jedno ekstremum.
     \subsubsection{Algorytm}
@@ -105,7 +81,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     Po zakończeniu iteracji, środek przedziału $[a,b]$ jest brany jako przybliżenie lokalnego ekstremum funkcji.
   \section{Badanie funkcji}
     Do wykonywania obliczeń używana jest arytmetyka w standardzie IEEE 754 \emph{double}.
-    \subsection{Funkcja 0}
+    \subsection{Funkcja 0.}
       Wzory i wykresy funkcji i pochodnych w podanym przedziale: \\ 
       \begin{center}
       \begin{tikzpicture}[x=8cm,y=1.6cm]
@@ -182,33 +158,8 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
       \end{tikzpicture} 
       \end{center}
       $$ f^{(2)}(x) = -4 \pi^2 \cdot sin(2 \pi x) $$
-      \begin{center}
-      \begin{tikzpicture}[x=8cm,y=0.007cm]
-
-        \def\xmin{0}
-        \def\xmax{1}
-        \def\ymin{-256}
-        \def\ymax{256}
-
-        \draw[style=help lines, ystep=64, xstep=0.1] (\xmin,\ymin) grid
-        (\xmax,\ymax);
-
-        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
-        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
-
-        \foreach \x in {0, 0.5 ,..., 1}
-          \node at (\x, \ymin) [below] {\x};
-        \foreach \y in {-256,-128 ,...,256}
-          \node at (\xmin,\y) [left] {\y};
-
-         \draw[color=red, domain=\xmin:\xmax] plot[id=fd3]
-          function{-8 * pi**3 * cos(2*pi*x)} node [right] {$f^{(3)}(x)$};
-  
-      \end{tikzpicture} 
-      \end{center}
-      $$ f^{(3)}(x) = -8 \pi^3 \cdot cos(2 \pi x) $$
       
-      Z wykresów można wywnioskować, że w tym przedziale funkcja $ f \in C^3 $. Na wykresie $ f $ można zauważyć, że w przedziale $[0,1]$ ma ona 2 ekstrema -- jedno minimum, jedno maksimum. Sugeruje to możliwość użycia metody \emph{złotego podziału}. Niestety $f^{(2)}$ i $f^{(3)}$ nie mają takich samych znaków dla każdej wartości argumentu z zadanego przedziału -- użycie metody \emph{regula falsi} będzie zatem bardzo utrudnione, zatem ją pominiemy dla tej funkcji. Możemy natomiast użyć metody bisekcji, ew. łącząc ją z metodą Newtona (trzeba jednak uważać, gdyż na końcach przedziału $f^{(2)}(0) = 0$ i $f^{(2)}(1) = 0$ -- nie mozemy użyć $ x = 0 $ i $ x = 1 $ jako punktów startowych tej metody).
+      Z wykresów można wywnioskować, że w tym przedziale funkcja $ f \in C^2 $. Na wykresie $ f $ można zauważyć, że w przedziale $[0,1]$ ma ona 2 ekstrema -- jedno minimum, jedno maksimum. Sugeruje to możliwość użycia metody \emph{złotego podziału}. Możemy natomiast użyć metody bisekcji, ew. łącząc ją z metodą Newtona (trzeba jednak uważać, gdyż na końcach przedziału $f^{(2)}(0) = 0$ i $f^{(2)}(1) = 0$ -- nie mozemy użyć $ x = 0 $ i $ x = 1 $ jako punktów startowych tej metody).
       
       \subsubsection{Metoda \emph{złotego podziału}}
       Polecenie: \texttt{./main -m golden\_section -f 0 -s 0 1 -i 50 -error 10e-8} \\
@@ -231,6 +182,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     Metoda \emph{złotego podziału} dla tej funkcji osiąga wymaganą precyzję (badany przedział jest mniejszy niż $10^{-8}$) dopiero po 34 iteracjach. W ten sposób znaleźliśmy przyblizenie tylko lokalnego minimum funkcji $ f(x) = -1\textrm{,}\; x = 0.75 $ i błąd przyblizenia wynosi $ |x_{33} - x| \approx 0.00000001674441429955 $. \\
     Chcąc przybliżyć minimum nalezy wykonać to samo polecenie dodając paramatr \texttt{-e max}. Lokalne maksimum funkcji znajduje się w $ x = 0.25 $ i $ f(x) = 1 $ - aby otrzymać wynik o takiej samej precyzji należy wykonać dokładnie tyle samo iteracji i błąd przybliżenia jest bardzo zbliżony. Trzeba jednak pamiętać, że dokładność przyblizeń w przypadku tej funkcji zależy nie tylko od precyzji arytmetyki, ale również od dokładności reprezentacji piczby $\pi = 3.14159265358979323846$ (reprezentacja w \texttt{cmath}). \\
     Dla tej funkcji metoda \emph{złotego podziału} daje wyniki o rządanej precyzji po dość dużej liczbie iteracji. Aby otrzymać precyzję rzędu $10^{-16}$ program musi wykonać 72 iteracje.
+    
     \subsubsection{Użycie metody \emph{złotego podziału} jako wstęp do metody Newtona}
     Warto tej metody użyć jako wstęp do metody Newtona. Weźmy 6-tą iterację z powyższej tabeli ($ i = 5 $) i użyjmy jej jako punkt startowy do metody Newtona (polecenie: \texttt{./main -m newton -f 1 -d 2 -x 0.75328890437410611636 -error 10e-8}). Otrzymujemy następujące dane:
      \begin{center}
@@ -250,9 +202,197 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     \item \texttt{./main -m bisection -f 1 -s 0 0.5 } - dla przedziału $[0, 0.5]$,
     \item \texttt{./main -m bisection -f 1 -s 0.5 1 } - dla przedziału $[0.5, 1]$
   \end{itemize}
-  Jak widać nie ma sensu łączenie tej metody z metodą Newtona, gdyż daje ona bardzo dokładne wyniki w czasie rpaktycznie stałym dla tej funkcji i tych dnaych wejściowych.
+  Jak widać nie ma sensu łączenie tej metody z metodą Newtona, gdyż daje ona bardzo dokładne wyniki w czasie praktycznie stałym dla tej funkcji i tych danych wejściowych.
+  
+  \subsection{Funkcja 1.}
+  Wzory i wykresy funkcji i pochodnych w podanym przedziale: \\ 
+      \begin{center}
+      \begin{tikzpicture}[x=4cm,y=3.2cm]
+
+        \def\xmin{-1}
+        \def\xmax{1}
+        \def\ymin{0.25}
+        \def\ymax{1.25}
+
+        \draw[style=help lines, ystep=0.25, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {-1, -0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {0.25 ,...,1.25}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=blue, domain=\xmin:\xmax] plot[id=g]
+          function{exp(-x**2)} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f(x) = e^{-x^2}  \textrm{,} \; x \in [-1,1] $$
+      \begin{center}
+      \begin{tikzpicture}[x=4cm,y=2cm]
+
+        \def\xmin{-1}
+        \def\xmax{1}
+        \def\ymin{-1}
+        \def\ymax{1}
+
+        \draw[style=help lines, ystep=0.25, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {-1, -0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-1, -0.5 ,...,1}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=blue, domain=\xmin:\xmax] plot[id=gd]
+          function{-2*exp(-x**2)*x} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f^{(1)}(x) = -2e^{-2^x} \cdot x) $$
+      \begin{center}
+      \begin{tikzpicture}[x=4cm,y=1.5cm]
+
+        \def\xmin{-1}
+        \def\xmax{1}
+        \def\ymin{-2.5}
+        \def\ymax{1}
+
+        \draw[style=help lines, ystep=0.5, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {-1, -0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-2.5, -2,...,1}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=blue, domain=\xmin:\xmax] plot[id=gd2]
+          function{exp(-x**2)*(4*x**2-2)} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f^{(2)}(x) = e^{-x^2} \cdot (4x^2 -2) $$
       
+    \subsubsection{Metoda \emph{złotego podziału}}
+    Funkcja $ f $ jest unimodalna w przedziale $ [-1,1] $, możemy więc wprost zastosować tę metodę (polecenie: \texttt{./main -m golden\_section -f 3 -s -1 1 -i 50 -error 10e-8}). Wyniki przezentują się następująco:
+      \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+          0 & 0.38196601125010509747 & 0.86424582259729920697 \\
+          1 & 0.14589803375031540345 & 0.97893871671341148311 \\
+          2 & -0.00000000000000005551 & 1.00000000000000000000 \\
+          3 & 0.09016994374947417956 & 0.99190234532493570807 \\
+          4 & 0.03444185374863295568 & 0.99881446201643198091 \\
+          5 & -0.00000000000000008327 & 1.00000000000000000000 \\
+          32 & -0.00000000000000008832 & 1.00000000000000000000 \\
+          33 & 0.00000004846548804954 & 0.99999999999999766853 \\
+          34 & 0.00000001851216909899 & 0.99999999999999966693 \\ \bottomrule
+        \end{tabular}
+    \end{center}
+    Dla tej funkcji uzyskanie zadowalającej precyzji wyniku wymaga równie wieli iteracji. Patrząc na dane otrzymane z przybliżania ekstremum tej i poprzedniej funkcji można dojść do wniosku, że dla pewnych funkcji algorytm dość szybko zaczyna \emph{kręcić się} w okół rozwiązania - są to funkcje które dla pewnego punktu $x$ i jego otoczenia $ x + \epsilon $ przyjmują wartości "symetrycznie" względem $x$, tzn.: $$ \forall_{|\alpha| < |\epsilon|} \: f(x + \alpha) = f(x - \alpha) $$ Niemniej szerokość badanego aktualnie przedziału nie pozwala na zakończenie algorytmu przy obecnej iteracji. Tym razem błąd przybliżenia wynosi $ |x_{34} - x| = 0.00000001851216909899 $, a dokładnym ekstremum jest $ x = 0 $, $ f(x) = 1$.
+    
+  \subsubsection{Użycie metody \emph{złotego podziału} jako wstęp do metody Newtona}
+  Jako punkt startowy weźmy $ x_2 = -0.00000000000000005551 $ (polecenie: \texttt{./main -m newton -f 4 -d 5 -x -0.00000000000000005551 -error 10e-8}).
+  \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+          0 & 0.00000000000000005551 & -0.00000000000000011102 \\
+          1 & 0.00000000000000000000 & -0.00000000000000000000 \\ \bottomrule
+        \end{tabular}
+    \end{center}
+      Jak widać w tym przypadku rozsądne wybranie przyblizenia z metody \emph{złotego podziału} pozwala bardzo szybko przybliżyć ekstremum funkcji. Trzeba jednak uważać na dobór punktu wyjściowego, ponieważ w tym wypadku możemy wybrać punkt który spowoduje, że metoda Newtona nie zakończy swojego działania. Łatwo się można o tym przekonać wybierając takie $ |x| > |x_{root}| \approx \pm 0.707106 $, $ f^{(2)}(x_{root}) = 0 $ (polecenie: \texttt{./main -m newton -f 4 -d 5 -i 100 -x 0.8}).
       
+  \subsubsection{Metoda bisekcji}
+  Zastosowanie metody bisekcji będzie miało podobny efekt jak przy poprzedniej funkcji. Aby się o tym przekonać nalezy wykonać polecenie: \texttt{./main -m bisection -f 4 -s -1 1}.
+  
+  \subsection{Funkcja 2.}
+   Wzory i wykresy funkcji i pochodnych w podanym przedziale: \\ 
+      \begin{center}
+      \begin{tikzpicture}[x=0.8cm,y=5cm]
+
+        \def\xmin{0}
+        \def\xmax{10}
+        \def\ymin{0}
+        \def\ymax{0.6}
+
+        \draw[style=help lines, ystep=0.1, xstep=1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 2 ,..., 10}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {0, 0.2 ,...,0.6}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=h]
+          function{x/(1+x**2)} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f(x) = \frac {x} {1 + x^2}  \textrm{,} \; x \in [0,10] $$
+      \begin{center}
+      \begin{tikzpicture}[x=0.8cm,y=2cm]
+
+        \def\xmin{0}
+        \def\xmax{10}
+        \def\ymin{-0.5}
+        \def\ymax{1.25}
+
+        \draw[style=help lines, ystep=0.25, xstep=1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 2 ,..., 10}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-0.5, 0 ,...,1.25}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=hd]
+          function{(1-x**2)/(1+x**2)**2} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f^{(1)}(x) = \frac{1-x^2}{(1+x^2)^2} $$
+      \begin{center}
+      \begin{tikzpicture}[x=0.8cm,y=1cm]
+
+        \def\xmin{0}
+        \def\xmax{10}
+        \def\ymin{-2}
+        \def\ymax{2}
+
+        \draw[style=help lines, ystep=0.5, xstep=1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 2 ,..., 10}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-2, -1.5 ,...,2}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=hdd]
+          function{2*x*(x**2-3)/(1+x**2)**3} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f^{(2)}(x) = \frac{2x(x^2 - 3)}{(1+x^2)^3} $$
   \section{Kompilacja i obsługa programu}
     \subsection{Wymagania}
     Aby skompilować program należy spełnić następujące wymagania dotyczące oprogramowania:

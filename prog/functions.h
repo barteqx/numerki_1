@@ -8,7 +8,7 @@ double func_1_d (double x) { return 2*M_PI*cos(2*M_PI*x); }
 double func_1_d_2 (double x) { return -4*pow(M_PI, 2)*sin(2*M_PI*x); }
 
 //Second function
-double func_2 (double x) { return exp(pow((-1)*x, 2)); }
+double func_2 (double x) { return exp((-1)*pow(x, 2)); }
 
 double func_2_d (double x) { return -2*exp(pow((-1)*x, 2))*x; }
 
