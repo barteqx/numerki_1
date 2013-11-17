@@ -4,6 +4,8 @@
 \usepackage{lmodern}
 \usepackage{polski}
 \usepackage{tikz}
+\usepackage{pgf}
+
 
 
 \title{Sprawozdanie}
@@ -100,10 +102,11 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     \end{itemize}
     Po zakończeniu iteracji, środek przedziału $[a,b]$ jest brany jako przybliżenie lokalnego ekstremum funkcji.
   \section{Badanie funkcji}
-  
+    Do wykonywania obliczeń używana jest arytmetyka w standardzie IEEE 754 \emph{double}.
     \subsection{Funkcja 0}
-      Wzór funkcji, pochodnych i badany przedział: \\ 
-      \begin{tikzpicture}[x=10cm,y=2.5cm]
+      Wzory i wykresy funkcji i pochodnych w podanym przedziale: \\ 
+      \begin{center}
+      \begin{tikzpicture}[x=8cm,y=1.6cm]
 
         \def\xmin{0}
         \def\xmax{1}
@@ -114,21 +117,96 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
         (\xmax,\ymax);
 
         \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
-        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$f(x)$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
 
-        \foreach \x in {0, 0.1,..., 1}
+        \foreach \x in {0, 0.5 ,..., 1}
           \node at (\x, \ymin) [below] {\x};
-        \foreach \y in {-1,-0.8,...,1}
+        \foreach \y in {-1,-0.5 ,...,1}
           \node at (\xmin,\y) [left] {\y};
 
-        \draw[color=blue] plot[smooth] file {f0plot.dat}
-         node [right] {data};
+         \draw[color=red, domain=\xmin:\xmax] plot[id=f]
+          function{sin(2*pi*x)} node [right] {$f(x)$};
   
-      \end{tikzpicture} \\
+      \end{tikzpicture}
+      \end{center}
       $$ f(x) = sin(2 \pi x)  \textrm{,} \; x \in [0,1] $$
+      \begin{center}
+      \begin{tikzpicture}[x=8cm,y=0.3cm]
+
+        \def\xmin{0}
+        \def\xmax{1}
+        \def\ymin{-7}
+        \def\ymax{7}
+
+        \draw[style=help lines, ystep=1, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-7,-6 ,...,7}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=red, domain=\xmin:\xmax] plot[id=fd]
+          function{2 * pi * cos(2*pi*x)} node [right] {$f^{(1)}(x)$};
+  
+      \end{tikzpicture} 
+      \end{center}
       $$ f^{(1)}(x) = 2 \pi \cdot cos(2 \pi x) $$
+      \begin{center}
+      \begin{tikzpicture}[x=8cm,y=0.04cm]
+
+        \def\xmin{0}
+        \def\xmax{1}
+        \def\ymin{-48}
+        \def\ymax{48}
+
+        \draw[style=help lines, ystep=16, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-48,-32 ,...,48}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=red, domain=\xmin:\xmax] plot[id=fd2]
+          function{-4 * pi**2 * sin(2*pi*x)} node [right] {$f^{(2)}(x)$};
+  
+      \end{tikzpicture} 
+      \end{center}
       $$ f^{(2)}(x) = -4 \pi^2 \cdot sin(2 \pi x) $$
+      \begin{center}
+      \begin{tikzpicture}[x=8cm,y=0.007cm]
+
+        \def\xmin{0}
+        \def\xmax{1}
+        \def\ymin{-256}
+        \def\ymax{256}
+
+        \draw[style=help lines, ystep=64, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {0, 0.5 ,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-256,-128 ,...,256}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=red, domain=\xmin:\xmax] plot[id=fd3]
+          function{-8 * pi**3 * cos(2*pi*x)} node [right] {$f^{(3)}(x)$};
+  
+      \end{tikzpicture} 
+      \end{center}
       $$ f^{(3)}(x) = -8 \pi^3 \cdot cos(2 \pi x) $$
+      
+      Z wykresów można wywnioskować, że w tym przedziale funkcja $ f \in C^3 $. Na wykresie $ f $ można zauważyć, że w przedziale $[0,1]$ ma ona 2 ekstrema -- jedno minimum, jedno maksimum. Sugeruje to możliwość użycia metody \emph{złotego podziału}. Niestety $f^{(2)}$ i $f^{(3)}$ nie mają takich samych znaków dla każdej wartości argumentu -- użycie metody \emph{regula falsi} będzie zatem bardzo utrudnione. Możemy natomiast użyć metody bisekcji, ew. łącząc ją z metodą Newtona (trzeba jednak uważać, gdyż na końcach przedziału $f^{(2)}(0) = 0$ i $f^{(2)}(1) = 0$ -- nie mozemy użyć $ x = 0 $ i $ x = 1 $ jako punktów startowych tej metody). 
       
   \section{Kompilacja i obsługa programu}
     \subsection{Wymagania}
