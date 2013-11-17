@@ -4,13 +4,12 @@
 \usepackage{lmodern}
 \usepackage{polski}
 \usepackage{tikz}
-\usepackage{pgf}
 \usepackage{siunitx,booktabs}
 \sisetup{
     table-auto-round
 }
 
-\title{Sprawozdanie}
+\title{Numeryszne metody przybliżania lokalnych ekstremum - sprawozdanie}
 \author{Bartosz Zasieczny}
 
 \begin{document}
@@ -188,7 +187,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
      \begin{center}
       \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
         \toprule
-        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+        {$i$}                & {$x_i$}               & {$f^{(1)}(x_i)$}            \\ \midrule
          0 & 0.75328890437410611636 & 0.12983149947540237323 \\
          1 & 0.74999953176226419327 & -0.00001848528487583362 \\
          2 & 0.75000000000000011102 & 0.00000000000000442639 \\ \bottomrule
@@ -299,14 +298,14 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
           34 & 0.00000001851216909899 & 0.99999999999999966693 \\ \bottomrule
         \end{tabular}
     \end{center}
-    Dla tej funkcji uzyskanie zadowalającej precyzji wyniku wymaga równie wieli iteracji. Patrząc na dane otrzymane z przybliżania ekstremum tej i poprzedniej funkcji można dojść do wniosku, że dla pewnych funkcji algorytm dość szybko zaczyna \emph{kręcić się} w okół rozwiązania - są to funkcje które dla pewnego punktu $x$ i jego otoczenia $ x + \epsilon $ przyjmują wartości "symetrycznie" względem $x$, tzn.: $$ \forall_{|\alpha| < |\epsilon|} \: f(x + \alpha) = f(x - \alpha) $$ Niemniej szerokość badanego aktualnie przedziału nie pozwala na zakończenie algorytmu przy obecnej iteracji. Tym razem błąd przybliżenia wynosi $ |x_{34} - x| = 0.00000001851216909899 $, a dokładnym ekstremum jest $ x = 0 $, $ f(x) = 1$.
+    Dla tej funkcji uzyskanie zadowalającej precyzji wyniku wymaga równie wieli iteracji. Patrząc na dane otrzymane z przybliżania ekstremum tej i poprzedniej funkcji można dojść do wniosku, że dla pewnych funkcji algorytm dość szybko zaczyna \emph{kręcić się} w okół rozwiązania, ale szerokość badanego aktualnie przedziału nie pozwala na zakończenie algorytmu przy obecnej iteracji. Tym razem błąd przybliżenia wynosi $ |x_{34} - x| = 0.00000001851216909899 $, a dokładnym ekstremum jest $ x = 0 $, $ f(x) = 1$.
     
   \subsubsection{Użycie metody \emph{złotego podziału} jako wstęp do metody Newtona}
   Jako punkt startowy weźmy $ x_2 = -0.00000000000000005551 $ (polecenie: \texttt{./main -m newton -f 4 -d 5 -x -0.00000000000000005551 -error 10e-8}).
   \begin{center}
       \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
         \toprule
-        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+        {$i$}                & {$x_i$}               & {$f^{(1)}(x_i)$}            \\ \midrule
           0 & 0.00000000000000005551 & -0.00000000000000011102 \\
           1 & 0.00000000000000000000 & -0.00000000000000000000 \\ \bottomrule
         \end{tabular}
@@ -317,9 +316,9 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
   Zastosowanie metody bisekcji będzie miało podobny efekt jak przy poprzedniej funkcji. Aby się o tym przekonać nalezy wykonać polecenie: \texttt{./main -m bisection -f 4 -s -1 1}.
   
   \subsection{Funkcja 2.}
-   Wzory i wykresy funkcji i pochodnych w podanym przedziale: \\ 
+   Wzory i wykresy funkcji i pochodnych w podanym przedziale:  
       \begin{center}
-      \begin{tikzpicture}[x=0.8cm,y=5cm]
+      \begin{tikzpicture}[x=0.8cm,y=4cm]
 
         \def\xmin{0}
         \def\xmax{10}
@@ -334,7 +333,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
 
         \foreach \x in {0, 2 ,..., 10}
           \node at (\x, \ymin) [below] {\x};
-        \foreach \y in {0, 0.2 ,...,0.6}
+        \foreach \y in {0, 0.3 ,...,0.6}
           \node at (\xmin,\y) [left] {\y};
 
          \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=h]
@@ -393,6 +392,58 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
       \end{tikzpicture}
       \end{center}
       $$ f^{(2)}(x) = \frac{2x(x^2 - 3)}{(1+x^2)^3} $$
+      
+      \subsubsection{Metoda \emph{złotego podziału}}
+      Zastosowanie tej metody dla tej funkcji potwierdza jej właściwości - szybko zbiega ku prawidłowemu rozwiązaniu, jednak algorytm się nie zatrzymuje gdyż aktualnie badany przedział jest za duży. (polecenie: \texttt{./main -m golden\_section -f 6 -s 0 10 -i 50 -error 10e-8 -e max}).
+      \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+          0 & 3.09016994374947451263 & 0.29293069691510170705 \\
+          1 & 1.90983005625052615351 & 0.41094142153556473263 \\
+          2 & 1.18033988749894880321 & 0.49320523891726081311 \\
+          3 & 0.72949016875157757234 & 0.47612006438087856042 \\
+          4 & 1.00813061875578369175 & 0.49998360708603867275 \\
+          36 & 1.00000003098496703657 & 0.49999999999999977796 \\
+          37 & 0.99999999562986996438 & 0.50000000000000000000 \\
+          38 & 1.00000001748052169681 & 0.49999999999999988898 \\ \bottomrule
+        \end{tabular}
+    \end{center}
+    
+    
+    \subsubsection{Użycie metody \emph{złotego podziału} jako wstęp do metody Newtona}
+    Jako punkt wyjściowy do metody Newtona weźmiemy $ x_4 = 1.00813061875578369175 $ (polecenie: \texttt{./main -m newton -f 7 -d 8 -x 1.00813061875578369175 -error 10e-8}).
+    \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f^{(1)}(x_i)$}            \\ \midrule
+          0 & 1.00813061875578369175 & -0.00401599788892920313 \\
+          1 & 0.99989948255975735769 & 0.00005026629844595792 \\
+          2 & 0.99999998484690499900 & 0.00000000757654767460 \\ \bottomrule
+        \end{tabular}
+    \end{center} 
+    
+    \subsubsection{Metoda bisekcji}
+    Metoda bisekcji prezentuje następujące wyniki (polecenie: \texttt{./main -m bisection -f 7 -s 0 10 -error 10e-8 -i 30}):
+     \begin{center}
+      \begin{tabular}{S[table-format=1.0]S[table-format=-1.9]S[table-format=-1.15,table-auto-round=false]}
+        \toprule
+        {$i$}                & {$x_i$}               & {$f(x_i)$}            \\ \midrule
+          0 & 5.00000000000000000000 & -0.03550295857988165771 \\
+          1 & 2.50000000000000000000 & -0.09988109393579072681 \\
+          2 & 1.25000000000000000000 & -0.08566329565734681628 \\
+          3 & 0.62500000000000000000 & 0.31511172831713168963 \\
+          4 & 0.93750000000000000000 & 0.03430137317871205516 \\
+          5 & 1.09375000000000000000 & -0.04069275589308898877 \\
+          6 & 1.01562500000000000000 & -0.00763130153694647519 \\
+          22 & 1.00000023841857910156 & -0.00000011920924691822 \\
+          23 & 0.99999964237213134766 & 0.00000017881403024946 \\
+          24 & 0.99999994039535522461 & 0.00000002980232505223 \\ \bottomrule
+        \end{tabular}
+    \end{center}
+    Metoda bisekcji szybciej niż metoda \emph{złotego podziału} kończy swoje działania, zwracając satysfakcjonujący wynik, niemniej ciąg zwracanych przyblizeń zbiega wolniej ku rozwiązaniu, dlatego też połączenie tej metody z metodą Newtona nie da szybciej dobrego rowiązania - dlatego pominiemy ten przypadek, gdyż jest mało interesujący.
+    
+     
   \section{Kompilacja i obsługa programu}
     \subsection{Wymagania}
     Aby skompilować program należy spełnić następujące wymagania dotyczące oprogramowania:
