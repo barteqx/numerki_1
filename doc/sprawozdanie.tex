@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{polski}
+\usepackage{tikz}
 
 
 \title{Sprawozdanie}
@@ -14,7 +15,14 @@
 \tableofcontents
 
 \section{Zadanie}
-Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwiasków, zaproponować sposób wyznaczania \textbf{\emph{ekstremum lokalnego}} funkcji \( f \in C^1[a,b] \). Wykonać eksperymenty m. in. dla: \( f(x) = sin(2 \pi x) \), \( x \in [0,1] \); \( f(x) = e^{-x^2} \), \( x \in [-1, 1] \); \( f(x) = \frac {x} {1+x^2} \), \( x \in [0,10] \); \( f(x) = x^2 + x - 1 \), \( x \in [-1,2] \).
+Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwiasków, zaproponować sposób wyznaczania \textbf{\emph{ekstremum lokalnego}} funkcji \( f \in C^1[a,b] \). Wykonać eksperymenty m. in. dla:
+\begin{enumerate}
+  \setcounter{enumi}{-1}
+  \item \( f(x) = sin(2 \pi x) \), \( x \in [0,1] \); 
+  \item \( f(x) = e^{-x^2} \), \( x \in [-1, 1] \); 
+  \item\( f(x) = \frac {x} {1+x^2} \), \( x \in [0,10] \); 
+  \item\( f(x) = x^2 + x - 1 \), \( x \in [-1,2] \).
+\end{enumerate}
 
 \section{Aparat matematyczny}
   W poszukiwaniu ekstremów funkcji będziemy używać poniższych metod. Niektóre z nich pozwalają na znalezienie ekstremum wprost, inne będą skupiać się na poszukiwaniu miejsca zerowego pierwszej pochodnej funkcji tam gdzie to możliwe.
@@ -90,6 +98,74 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
         x_R^{(i+1)} := x_L^{(i)}
         \end{array}\right. \)
     \end{itemize}
+  \section{Badanie funkcji}
   
+    \subsection{Funkcja 0}
+      Wzór funkcji, pochodnych i badany przedział: \\ 
+      \begin{tikzpicture}[x=8cm,y=2.5cm]
+
+        \def\xmin{0}
+        \def\xmax{1}
+        \def\ymin{-1}
+        \def\ymax{1}
+
+        \draw[style=help lines, ystep=0.2, xstep=0.1] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$f(x)$};
+
+        \foreach \x in {0, 0.1,..., 1}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-1,-0.8,...,1}
+          \node at (\xmin,\y) [left] {\y};
+
+        \draw[color=blue] plot[smooth] file {f0plot.dat}
+         node [right] {data};
+  
+      \end{tikzpicture} \\
+      $$ f(x) = sin(2 \pi x)  \textrm{,} \; x \in [0,1] $$
+      $$ f^{(1)}(x) = 2 \pi \cdot cos(2 \pi x) $$
+      $$ f^{(2)}(x) = -4 \pi^2 \cdot sin(2 \pi x) $$
+      $$ f^{(3)}(x) = -8 \pi^3 \cdot cos(2 \pi x) $$
+      
+  \section{Kompilacja i obsługa programu}
+    \subsection{Wymagania}
+    Aby skompilować program należy spełnić następujące wymagania dotyczące oprogramowania:
+    \begin{itemize}
+      \item kompilator $ G\!+\!+ $ w wersji 4.7 lub późniejszej - kompilator musi obsługiwać standard $ C^{++}11 $,
+      \item obecność narzędzia GNU Make
+    \end{itemize}
+    Powyższe wymagania powinny być automatycznie spełnione w każdej aktualnej dystrybucji GNU/Linux.
     
+    \subsection{Kompilacja}
+    Należy przejść do katalogu \texttt{prog} i wykonać polecenie \texttt{make} - kompilacja wykona się automatycznie. W pliku \texttt{Makefile} podane są polecenia, które należy wykonać aby skompilować program ręcznie.
+    
+    \subsection{Obsługa programu}
+    Program uruchamiamy za pomoca pliku \texttt{main}, po jego nazwie podając ciąg bedący kombinacją ponizszych parametrów:
+    \begin{itemize}
+      \item \texttt{-f <nr\_funkcji>} -- za pomocą tego argumentu wybieramy jedną z dostępnych funkcji - liczba przyporzadkowana funkcji to jej liczba porządkowa z treści zadania \( \cdot 3 \), dodanie 1 to pierwsza pochodna, dodanie 2 to druga pochodna,
+      \item \texttt{-d <nr\_funkcji>} -- podobnie jak powyżej, tyle, że podajemy liczbę pochodnej,
+      \item \texttt{-m <metoda>} -- wybór jednej z metod:
+        \begin{itemize}
+          \item \texttt{newton} -- metoda newtona (obowiązkowe parametry wywołania to \texttt{-f -d -x})
+          \item \texttt{regula\_falsi} -- \emph{regula falsi} (obowiązkowe parametry to \texttt{-f -s})
+          \item \texttt{bisection} -- bisekcja (obowiązkowe parametry to \texttt{-f -s})
+          \item \texttt{golden\_section} -- metoda \emph{złotego podziału} (obowiązkowe parametry to \texttt{-f -s})
+          \item \texttt{plot} -- "wykres" funkcji (punkty) (obowiązkowe parametry to \texttt{-f -s -step})
+        \end{itemize}
+      \item \texttt{-p <n>} -- wypisz wyniki z precyzją $n$ cyfr po przecinku (domyślnie 20),
+      \item \texttt{-s <a> <b>} -- określ badany przedział od $a$ do $b$,
+      \item \texttt{-x <y>} -- $y$ jako punkt startowy,
+      \item \texttt{-e (min|max)} -- określ czy szukać lokalnego mininum czy maximum w przedziale (działa tylko z \texttt{-m golden\_section}, domyślnie \texttt{min}),
+      \item \texttt{-error <e>} -- określ tolerancję błędu (domyślnie $ 10^{-10} $),
+      \item \texttt{-step <s>} -- wielkość kroku przy obliczaniu punktów wykresu (działa tylko z \texttt{-m plot}, domyślnie 0.1),
+      \item \texttt{-i <i>} -- ilość iteracji (domyślnie 20),
+      
+    \end{itemize}
+    
+    Przykład: szukamy lokalnego minimum dla pierwszej funkcji z zadania, w podanym przedziale, za pomocą metody \emph{złotego podziału}, z tolerancją błędu na poziomie $10^{-12}$, maksymalnie 30 iteracjami i precyzją 25 liczb po przecinku.
+    \begin{center}
+      \texttt{./main -f 0 -s 0 1 -m golden\_section -e 10e-12 -i 30 -p 25}
+    \end{center}    
 \end{document}

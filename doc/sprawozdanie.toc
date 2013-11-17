@@ -1,9 +1,15 @@
 \contentsline {section}{\numberline {1}Zadanie}{1}
-\contentsline {section}{\numberline {2}Aparat matematyczny}{1}
-\contentsline {subsection}{\numberline {2.1}Metoda Newtona}{1}
+\contentsline {section}{\numberline {2}Aparat matematyczny}{2}
+\contentsline {subsection}{\numberline {2.1}Metoda Newtona}{2}
 \contentsline {subsubsection}{\numberline {2.1.1}Uwagi}{2}
 \contentsline {subsection}{\numberline {2.2}Metoda bisekcji}{2}
-\contentsline {subsection}{\numberline {2.3}\emph {Regula falsi}}{2}
+\contentsline {subsection}{\numberline {2.3}\emph {Regula falsi}}{3}
 \contentsline {subsubsection}{\numberline {2.3.1}Wzory}{3}
 \contentsline {subsection}{\numberline {2.4}Metoda \emph {z\IeC {\l }otego podzia\IeC {\l }u}}{3}
-\contentsline {subsubsection}{\numberline {2.4.1}Algorytm}{3}
+\contentsline {subsubsection}{\numberline {2.4.1}Algorytm}{4}
+\contentsline {section}{\numberline {3}Badanie funkcji}{4}
+\contentsline {subsection}{\numberline {3.1}Funkcja 0}{4}
+\contentsline {section}{\numberline {4}Kompilacja i obs\IeC {\l }uga programu}{5}
+\contentsline {subsection}{\numberline {4.1}Wymagania}{5}
+\contentsline {subsection}{\numberline {4.2}Kompilacja}{5}
+\contentsline {subsection}{\numberline {4.3}Obs\IeC {\l }uga programu}{5}

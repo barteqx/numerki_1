@@ -4,7 +4,7 @@
 
 double K = (sqrt(5)-1)/2;
 
-void golden_section(double (*f)(double), double a, double b, bool min, int iterations, double E) {
+void golden_section(double (*f)(double), double a, double b, bool min, int iterations, double E, int precision) {
   double x_L, x_R, l;
   for (int i = 0; i < iterations; i++) {
     l = K*(b-a);
@@ -31,7 +31,7 @@ void golden_section(double (*f)(double), double a, double b, bool min, int itera
         x_R = b - (b - a)*K;
       }
     }
-    std::cout << std::setprecision(40) << (b+a)/2 << '\t' << (*f)((b+a)/2) << std::endl;
+    std::cout << std::setprecision(precision) << std::showpoint<< std::fixed << (b+a)/2 << '\t' << (*f)((b+a)/2) << std::endl;
     if (b - a < E) break;
   }
 }

@@ -2,11 +2,11 @@
 #include <iostream>
 #include <iomanip>
 
-void bisection(double (*f)(double), double a, double b, int iterations, double E) {
+void bisection(double (*f)(double), double a, double b, int iterations, double E, int precision) {
   double m;
   for (int i = 0; i < iterations; i++) {
     m = (b+a)/2;
-    std::cout << std::setprecision(40) << m << '\t' << (*f)(m) << std::endl;
+    std::cout << std::setprecision(precision) << std::showpoint << std::fixed << m << '\t' << (*f)(m) << std::endl;
     if ((*f)(a)*(*f)(m) < 0) {
       b = m;
     } else if ((*f)(b)*(*f)(m) < 0){

@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
   double start_x, a, b, step = 0.1;
   char method;
   bool gs_min = true;
-  int iterations = 20;
+  int iterations = 20, precision = 20;
   double E = 10e-10;
 
   for (int i = 1; i < argc; i++) {
@@ -102,6 +102,11 @@ int main(int argc, char const *argv[])
       arguments.erase(arguments.begin(), arguments.begin()+2);
     }
 
+    else if (arguments[0] == "-p") {
+      precision = std::stoi(arguments[1]);
+      arguments.erase(arguments.begin(), arguments.begin()+2);
+    }
+
     else if (arguments[0] == "-error") {
       E = std::stod(arguments[1]);
       arguments.erase(arguments.begin(), arguments.begin()+2);
@@ -136,19 +141,19 @@ int main(int argc, char const *argv[])
 
   switch (method) {
   case 'p':
-    plot_func((*function), a, b, step, E);
+    plot_func((*function), a, b, step, E, precision);
     break;
   case 'n':
-    newton((*function), (*derivative), start_x, iterations, E);
+    newton((*function), (*derivative), start_x, iterations, E, precision);
     break;
   case 'b':
-    bisection((*function), a, b, iterations, E);
+    bisection((*function), a, b, iterations, E, precision);
     break;
   case 'g':
-    golden_section((*function), a, b, gs_min, iterations, E);
+    golden_section((*function), a, b, gs_min, iterations, E, precision);
     break;
   case 'r':
-    regula_falsi((*function), a, b, iterations, E);
+    regula_falsi((*function), a, b, iterations, E, precision);
   }
   return 0;
 }

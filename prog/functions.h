@@ -8,16 +8,12 @@ double func_1_d (double x) { return 2*PI*cos(2*PI*x); }
 
 double func_1_d_2 (double x) { return -4*pow(PI, 2)*sin(2*PI*x); }
 
-double func_1_d_3 (double x) { return -8*pow(PI, 3)*cos(2*PI*x); }
-
 //Second function
 double func_2 (double x) { return exp(pow((-1)*x, 2)); }
 
 double func_2_d (double x) { return -2*exp(pow((-1)*x, 2))*x; }
 
 double func_2_d_2 (double x) { return exp(pow((-1)*x, 2))*(4*pow(x, 2) - 2); }
-
-double func_2_d_2 (double x) { return -4*exp(pow((-1)*x, 2))*x*(2*pow(x, 3) - 3); }
 
 //Third function
 double func_3 (double x) { return x/(1+pow(x, 2)); }
