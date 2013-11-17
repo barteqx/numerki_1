@@ -250,7 +250,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
           \node at (\xmin,\y) [left] {\y};
 
          \draw[color=blue, domain=\xmin:\xmax] plot[id=gd]
-          function{-2*exp(-x**2)*x} node [right] {$f(x)$};
+          function{-2*exp(-x**2)*x} node [right] {$f^{(1)}(x)$};
   
       \end{tikzpicture}
       \end{center}
@@ -275,7 +275,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
           \node at (\xmin,\y) [left] {\y};
 
          \draw[color=blue, domain=\xmin:\xmax] plot[id=gd2]
-          function{exp(-x**2)*(4*x**2-2)} node [right] {$f(x)$};
+          function{exp(-x**2)*(4*x**2-2)} node [right] {$f^{(2)}(x)$};
   
       \end{tikzpicture}
       \end{center}
@@ -362,7 +362,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
           \node at (\xmin,\y) [left] {\y};
 
          \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=hd]
-          function{(1-x**2)/(1+x**2)**2} node [right] {$f(x)$};
+          function{(1-x**2)/(1+x**2)**2} node [right] {$f^{(1)}$};
   
       \end{tikzpicture}
       \end{center}
@@ -387,7 +387,7 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
           \node at (\xmin,\y) [left] {\y};
 
          \draw[color=green, domain=\xmin:\xmax] plot[smooth,id=hdd]
-          function{2*x*(x**2-3)/(1+x**2)**3} node [right] {$f(x)$};
+          function{2*x*(x**2-3)/(1+x**2)**3} node [right] {$f^{(2)}$};
   
       \end{tikzpicture}
       \end{center}
@@ -443,6 +443,67 @@ Korzystając z omówionych na wykładzie iteracyjnych metod aproksymacji pierwia
     \end{center}
     Metoda bisekcji szybciej niż metoda \emph{złotego podziału} kończy swoje działania, zwracając satysfakcjonujący wynik, niemniej ciąg zwracanych przyblizeń zbiega wolniej ku rozwiązaniu, dlatego też połączenie tej metody z metodą Newtona nie da szybciej dobrego rowiązania - dlatego pominiemy ten przypadek, gdyż jest mało interesujący.
     
+  \subsection{Funkcja 3.}
+  Wzory i wykresy funkcji i pochodnych w podanym przedziale:
+    \begin{center}
+      \begin{tikzpicture}[x=2cm,y=0.7cm]
+
+        \def\xmin{-1}
+        \def\xmax{2}
+        \def\ymin{-1.5}
+        \def\ymax{5}
+
+        \draw[style=help lines, ystep=0.5, xstep=0.25] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {-1, -0.5 ,..., 2}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-1.5, 0 ,...,5}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=purple, domain=\xmin:\xmax] plot[smooth,id=h]
+          function{x**2 + x - 1} node [right] {$f(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f(x) = x^2 + x -1 \textrm{,} \; x \in [-1,2] $$
+      
+      \begin{center}
+      \begin{tikzpicture}[x=2cm,y=0.7cm]
+
+        \def\xmin{-1}
+        \def\xmax{2}
+        \def\ymin{-1.5}
+        \def\ymax{5}
+
+        \draw[style=help lines, ystep=0.5, xstep=0.25] (\xmin,\ymin) grid
+        (\xmax,\ymax);
+
+        \draw[->] (\xmin,\ymin) -- (\xmax,\ymin) node[right] {$x$};
+        \draw[->] (\xmin,\ymin) -- (\xmin,\ymax) node[above] {$y$};
+
+        \foreach \x in {-1, -0.5 ,..., 2}
+          \node at (\x, \ymin) [below] {\x};
+        \foreach \y in {-1.5, 0 ,...,5}
+          \node at (\xmin,\y) [left] {\y};
+
+         \draw[color=purple, domain=\xmin:\xmax] plot[smooth,id=h]
+          function{2*x + 1} node [right] {$f^{(1)}(x)$};
+  
+      \end{tikzpicture}
+      \end{center}
+      $$ f^{(1)}(x) = 2x + 1 $$
+      $$ f^{(2)}(x) = 2 $$
+      
+      Metody \emph{złotego podziału} i bisekcji w tym przypadku wykonują kolejno 36 i 24 iteracje, potwierdzają się poprzednie obserwacje - obydwie szybko wskazują ekstremum, jednakże długo się wykonują, gdyż algorytm czeka aż przedział stanie się odpowiednio "wąski". Metoda Newtona daje odpowiedź w jednym kroku, gdyż $ f^{(1)} $ jest funkcją liniową. Polecenia potrzebne do wykonania obliczeń:
+      \begin{itemize}
+        \item \texttt{./main -m golden\_section -f 9 -s -1 2 -error 10e-8 -i 50},
+        \item \texttt{./main -m bisection -f 10 -s -1 2 -error 10e-8 -i 50},
+        \item \texttt{./main -m newton -f 10 -d 11 -x -1 -error 10e-8}.
+      \end{itemize}
      
   \section{Kompilacja i obsługa programu}
     \subsection{Wymagania}
